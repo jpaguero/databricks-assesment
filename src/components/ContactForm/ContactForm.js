@@ -81,7 +81,7 @@ const ContactForm = ({ shouldFocus, onBlurInput }) => {
             placeholder='Phone, ex. (000) 000-00000'
             required
           />
-          {!isPhoneValid(phone) && phone.length && (
+          {!isPhoneValid(phone) && phone.length > 0 && (
             <span className="error">Add a valid Phone.</span>
           )}
 
