@@ -1,4 +1,28 @@
 // src/components/ContactForm.scss
 .contact-form {
-  
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    label {
+      margin: 10px 0;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      margin: 5px 0;
+    }
+
+    .error {
+      color: red;
+    }
+  }
 }
