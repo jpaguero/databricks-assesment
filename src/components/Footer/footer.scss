@@ -1,1 +1,8 @@
-.footer {}
+.footer {
+  .container {
+    max-width: var(--size-content);
+  }
+  .date {
+    border-top: 1px solid #fff;
+  }
+}
