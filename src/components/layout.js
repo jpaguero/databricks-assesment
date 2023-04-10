@@ -29,9 +29,9 @@ const Layout = () => {
           padding: `var(--size-gutter)`,
         }}
       >
-        <div className=''>
-          <h1>Contact Us</h1>
-          <p>Please provide some information to get started.</p>
+        <div>
+          <h1 className='text-[24px] m-0 pb-[20px]'>Contact Us</h1>
+          <p className='text-[14px]'>Please provide some information to get started.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
           <div className="md:col-span-2">

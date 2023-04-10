@@ -14,6 +14,11 @@ const ContactForm = ({ shouldFocus, onBlurInput }) => {
     return regex.test(email);
   };
 
+  const isPhoneValid = (phone) => {
+    const regex = /^\(\d{3}\)\s?\d{3}-\d{5}$/;
+    return regex.test(phone);
+  }
+
   const hasGmail = (email) => {
     const isGmail = email.toLowerCase().includes('@gmail.com');
     return !isGmail;
@@ -21,7 +26,7 @@ const ContactForm = ({ shouldFocus, onBlurInput }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email.length >= 10 && isEmailValid(email)) {
+    if (email.length >= 10 && isEmailValid(email) && isPhoneValid(phone)) {
       setSubmitted(true);
     }
   };
@@ -73,9 +78,12 @@ const ContactForm = ({ shouldFocus, onBlurInput }) => {
             name="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder='Phone'
+            placeholder='Phone, ex. (000) 000-00000'
             required
           />
+          {!isPhoneValid(phone) && phone.length && (
+            <span className="error">Add a valid Phone.</span>
+          )}
 
           <select
             className="w-full rounded-[5px] border border-slate-300 focus:border-blue-300 focus:outline-none focus:ring-1 focus:ring-blue-300 py-[17px] px-[22px] my-[5px]"
