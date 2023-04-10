@@ -1,7 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './ContactForm.scss';
 
-const ContactForm = () => {
+const ContactForm = ({ shouldFocus, onBlurInput }) => {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [selection, setSelection] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const emailInputRef = useRef(null);
+
+  const isEmailValid = (email) => {
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/i;
+    return regex.test(email);
+  };
+
+  const hasGmail = (email) => {
+    const isGmail = email.toLowerCase().includes('@gmail.com');
+    return !isGmail;
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email.length >= 10 && isEmailValid(email)) {
+      setSubmitted(true);
+    }
+  };
+
+  useEffect(() => {
+    if (shouldFocus && emailInputRef.current) {
+      emailInputRef.current.focus();
+    }
+  }, [shouldFocus]);
 
   return (
     <div className="contact-form">
@@ -16,14 +45,24 @@ const ContactForm = () => {
             id="email"
             name="email"
             value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={onBlurInput}
             placeholder='Email'
             required
           />
+          {!hasGmail(email) && email.length && (
+            <span className="error">Gmail is not allowed.</span>
+          )}
+          {email.length < 10 && email.length > 0 && (
+            <span className="error">Minimum 10 characters.</span>
+          )}
           <input
             className='rounded-[5px] border border-slate-300 focus:border-blue-300 focus:outline-none focus:ring-1 focus:ring-blue-300 py-[17px] px-[22px]'
             type="text"
             id="name"
             name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             placeholder='Name'
             required
           />
@@ -32,6 +71,8 @@ const ContactForm = () => {
             type="text"
             id="phone"
             name="phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             placeholder='Phone'
             required
           />
@@ -40,6 +81,8 @@ const ContactForm = () => {
             className="w-full rounded-[5px] border border-slate-300 focus:border-blue-300 focus:outline-none focus:ring-1 focus:ring-blue-300 py-[17px] px-[22px] my-[5px]"
             id="selection"
             name="selection"
+            value={selection}
+            onChange={(e) => setSelection(e.target.value)}
             required
           >
             <option value="">How we can help you?</option>
